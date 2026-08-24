@@ -14,22 +14,19 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS pour masquer GitHub/Footer tout en gardant la barre latérale
+# Style CSS ciblé : masque le menu GitHub/Streamlit tout en gardant la barre latérale fonctionnelle
 st.markdown("""
     <style>
-    /* Masquer le menu à trois points (thème, impression, etc.) et le footer */
+    /* Masquer le menu 3 points et le pied de page */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Masquer l'icône GitHub et le logo Streamlit en haut à droite */
-    .stAppToolbar {visibility: hidden;}
+    /* Masquer l'icône de profil GitHub et le bouton Fork/View Source */
+    a[href*="github.com"] {display: none !important;}
+    button[title*="View code"] {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
     
-    /* Afficher uniquement le bouton pour ouvrir/fermer la barre latérale */
-    [data-testid="stSidebarCollapseButton"] {
-        visibility: visible !important;
-    }
-    
-    /* Style minimaliste des boutons */
+    /* Style des boutons de la page */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
