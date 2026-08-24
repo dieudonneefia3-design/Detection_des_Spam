@@ -14,24 +14,33 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS pour masquer le bouton Fork/GitHub et le badge Streamlit en bas
+# Masquage définitif du bouton Fork/GitHub, du badge Streamlit et du profil
 st.markdown("""
     <style>
-    /* 1. Masquer le bouton Fork et le logo GitHub en haut à droite */
-    [data-testid="stAppToolbar"] > div:has(a[href*="github.com"]),
-    .stAppHeader a[href*="github.com"],
-    header a[href*="github.com"] {
+    /* 1. Masquer les liens GitHub / Fork / Toolbar */
+    [data-testid="stAppToolbar"] div:has(a),
+    [data-testid="stHeader"] a,
+    header a {
         display: none !important;
     }
 
-    /* 2. Masquer le badge rouge et la photo de profil en bas à droite */
+    /* 2. Cacher complètement le conteneur du badge de statut / profil en bas */
     [data-testid="stStatusWidget"],
     [data-testid="stConnectionStatus"],
-    div[class*="viewerBadge"] {
+    .viewerBadge_container__163Vn,
+    div[class*="viewerBadge"],
+    div[class*="Profile"],
+    iframe[title*="streamlit"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* 3. Masquer le pied de page */
+    footer {
         display: none !important;
     }
-    
-    /* Style minimaliste des boutons */
+
+    /* Style des boutons de l'application */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
