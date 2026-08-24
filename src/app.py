@@ -5,11 +5,8 @@ import string
 import pandas as pd
 from datetime import datetime
 
-import streamlit as st
-import streamlit.components.v1 as components
-
 # ------------------------------------------------------------------
-# 1. CONFIGURATION DE LA PAGE & MASQUAGE GITHUB / FORK
+# 1. CONFIGURATION DE LA PAGE
 # ------------------------------------------------------------------
 st.set_page_config(
     page_title="Détecteur de SMS Spam",
@@ -17,9 +14,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS basique pour vos boutons
+# Masquage via les identifiants stAppDeployButton
 st.markdown("""
     <style>
+    /* Masquer spécifiquement le bouton Fork / Deploy */
+    .stAppDeployButton {display: none !important;}
+    [data-testid="stAppDeployButton"] {display: none !important;}
+    [data-testid="manage-app-button"] {display: none !important;}
+    
+    /* Style minimaliste des boutons */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
@@ -28,29 +31,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
-# Injection JavaScript pour supprimer l'élément Fork et GitHub en haut
-components.html(
-    """
-    <script>
-    const parentDoc = window.parent.document;
-    const hideGithub = () => {
-        // Cibler la zone de droite dans la barre supérieure
-        const toolbar = parentDoc.querySelector('[data-testid="stAppToolbar"]');
-        if (toolbar) {
-            // Supprimer ou masquer tout ce qui contient un lien vers GitHub
-            const githubElements = toolbar.querySelectorAll('a[href*="github.com"], div:has(a[href*="github.com"])');
-            githubElements.forEach(el => el.style.setProperty('display', 'none', 'important'));
-        }
-    };
-    // Exécuter immédiatement et en boucle pour contrer le rechargement de Streamlit
-    hideGithub();
-    setInterval(hideGithub, 500);
-    </script>
-    """,
-    height=0,
-    width=0
-)
 
 # ------------------------------------------------------------------
 # 2. PRÉTRAITEMENT NLP
