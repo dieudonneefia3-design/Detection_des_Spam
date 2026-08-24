@@ -14,9 +14,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS minimaliste pour embellir les boutons
+# Style CSS pour embellir les boutons et masquer le header/footer Streamlit & GitHub
 st.markdown("""
     <style>
+    /* Masquer le menu, le header Streamlit et le footer */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    
+    /* Style minimaliste des boutons */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
