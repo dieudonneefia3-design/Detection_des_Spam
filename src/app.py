@@ -14,19 +14,25 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS ciblé : masque le menu GitHub/Streamlit tout en gardant la barre latérale fonctionnelle
+# Style CSS pour supprimer uniquement le badge GitHub et l'avatar Streamlit
 st.markdown("""
     <style>
-    /* Masquer le menu 3 points et le pied de page */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* 1. Masquer le bouton Fork et le logo GitHub en haut à droite */
+    [data-testid="stAppToolbar"] > div:nth-child(2),
+    [data-testid="stAppHeader"] a[href*="github.com"],
+    header a[href*="github.com"] {
+        display: none !important;
+    }
+
+    /* 2. Masquer le badge rouge Streamlit et la photo de profil GitHub en bas à droite */
+    [data-testid="stStatusWidget"],
+    .viewerBadge_container__163Vn,
+    .viewerBadge_link__1S137,
+    [class*="viewerBadge"] {
+        display: none !important;
+    }
     
-    /* Masquer l'icône de profil GitHub et le bouton Fork/View Source */
-    a[href*="github.com"] {display: none !important;}
-    button[title*="View code"] {display: none !important;}
-    [data-testid="stStatusWidget"] {display: none !important;}
-    
-    /* Style des boutons de la page */
+    /* Style minimaliste des boutons */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
