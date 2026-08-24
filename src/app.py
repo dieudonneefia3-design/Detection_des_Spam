@@ -14,21 +14,20 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Style CSS pour supprimer uniquement le badge GitHub et l'avatar Streamlit
+# Style CSS pour masquer le bouton Fork/GitHub et le badge Streamlit en bas
 st.markdown("""
     <style>
     /* 1. Masquer le bouton Fork et le logo GitHub en haut à droite */
-    [data-testid="stAppToolbar"] > div:nth-child(2),
-    [data-testid="stAppHeader"] a[href*="github.com"],
+    [data-testid="stAppToolbar"] > div:has(a[href*="github.com"]),
+    .stAppHeader a[href*="github.com"],
     header a[href*="github.com"] {
         display: none !important;
     }
 
-    /* 2. Masquer le badge rouge Streamlit et la photo de profil GitHub en bas à droite */
+    /* 2. Masquer le badge rouge et la photo de profil en bas à droite */
     [data-testid="stStatusWidget"],
-    .viewerBadge_container__163Vn,
-    .viewerBadge_link__1S137,
-    [class*="viewerBadge"] {
+    [data-testid="stConnectionStatus"],
+    div[class*="viewerBadge"] {
         display: none !important;
     }
     
