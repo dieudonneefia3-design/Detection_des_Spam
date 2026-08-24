@@ -5,8 +5,11 @@ import string
 import pandas as pd
 from datetime import datetime
 
+import streamlit as st
+import streamlit.components.v1 as components
+
 # ------------------------------------------------------------------
-# 1. CONFIGURATION DE LA PAGE
+# 1. CONFIGURATION DE LA PAGE & MASQUAGE GITHUB / FORK
 # ------------------------------------------------------------------
 st.set_page_config(
     page_title="Détecteur de SMS Spam",
@@ -14,33 +17,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Masquage définitif du bouton Fork/GitHub, du badge Streamlit et du profil
+# Style CSS basique pour vos boutons
 st.markdown("""
     <style>
-    /* 1. Masquer les liens GitHub / Fork / Toolbar */
-    [data-testid="stAppToolbar"] div:has(a),
-    [data-testid="stHeader"] a,
-    header a {
-        display: none !important;
-    }
-
-    /* 2. Cacher complètement le conteneur du badge de statut / profil en bas */
-    [data-testid="stStatusWidget"],
-    [data-testid="stConnectionStatus"],
-    .viewerBadge_container__163Vn,
-    div[class*="viewerBadge"],
-    div[class*="Profile"],
-    iframe[title*="streamlit"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* 3. Masquer le pied de page */
-    footer {
-        display: none !important;
-    }
-
-    /* Style des boutons de l'application */
     .stButton>button {
         width: 100%;
         border-radius: 8px;
@@ -49,6 +28,29 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+# Injection JavaScript pour supprimer l'élément Fork et GitHub en haut
+components.html(
+    """
+    <script>
+    const parentDoc = window.parent.document;
+    const hideGithub = () => {
+        // Cibler la zone de droite dans la barre supérieure
+        const toolbar = parentDoc.querySelector('[data-testid="stAppToolbar"]');
+        if (toolbar) {
+            // Supprimer ou masquer tout ce qui contient un lien vers GitHub
+            const githubElements = toolbar.querySelectorAll('a[href*="github.com"], div:has(a[href*="github.com"])');
+            githubElements.forEach(el => el.style.setProperty('display', 'none', 'important'));
+        }
+    };
+    // Exécuter immédiatement et en boucle pour contrer le rechargement de Streamlit
+    hideGithub();
+    setInterval(hideGithub, 500);
+    </script>
+    """,
+    height=0,
+    width=0
+)
 
 # ------------------------------------------------------------------
 # 2. PRÉTRAITEMENT NLP
